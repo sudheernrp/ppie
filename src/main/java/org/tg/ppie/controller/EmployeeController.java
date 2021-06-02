@@ -1,19 +1,14 @@
 package org.tg.ppie.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.util.StringUtils;
+import org.springframework.web.bind.annotation.*;
 import org.tg.ppie.exception.ResourceNotFoundException;
 import org.tg.ppie.model.Employee;
 import org.tg.ppie.repository.EmployeeRepository;
 
 import javax.validation.Valid;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
 
 
 import java.util.HashMap;
@@ -52,6 +47,25 @@ public class EmployeeController {
         employee.setEmailId(employeeDetails.getEmailId());
         employee.setLastName(employeeDetails.getLastName());
         employee.setFirstName(employeeDetails.getFirstName());
+        final Employee updatedEmployee = employeeRepository.save(employee);
+        return ResponseEntity.ok(updatedEmployee);
+    }
+
+    // update Email only
+    @PatchMapping("/employees/{id}")
+    public ResponseEntity<Employee> patchUpdate(@PathVariable(value = "id") Long employeeId,
+                                                @RequestBody Map<String, String> update) throws ResourceNotFoundException{
+
+        Employee employee = employeeRepository.findById(employeeId)
+                .orElseThrow(() -> new ResourceNotFoundException("Employee not found for this id :: " + employeeId));
+        String emailId = update.get("emailId");
+        if (!StringUtils.isEmpty(emailId)) {
+            employee.setEmailId(emailId);
+        }else{
+            throw new ResourceNotFoundException("Patch Exception :: " + update.keySet());
+        }
+
+        employee.setEmailId(emailId);
         final Employee updatedEmployee = employeeRepository.save(employee);
         return ResponseEntity.ok(updatedEmployee);
     }

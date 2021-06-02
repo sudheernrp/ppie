@@ -24,6 +24,9 @@ public class Employee {
     @Column(name = "last_name", nullable = false)
     private String lastName;
 
+    @Column(name = "age", nullable = false)
+    private String age;
+
     @Column(name = "email_address", nullable = false)
     private String emailId;
 
