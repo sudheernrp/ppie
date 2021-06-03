@@ -11,7 +11,7 @@ import javax.validation.Valid;
 import org.springframework.http.ResponseEntity;
 
 
-import java.util.HashMap;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -70,15 +70,22 @@ public class EmployeeController {
         return ResponseEntity.ok(updatedEmployee);
     }
 
-    @DeleteMapping("/employees/{id}")
-    public Map< String, Boolean > deleteEmployee(@PathVariable(value = "id") Long employeeId)
-    throws ResourceNotFoundException {
-        Employee employee = employeeRepository.findById(employeeId)
-            .orElseThrow(() -> new ResourceNotFoundException("Employee not found for this id :: " + employeeId));
+    @GetMapping("/employee/full-name/{id}")
+    public ResponseEntity < Employee > getEmployeeFullName(@PathVariable(value = "id") Long employeeId)
+            throws ResourceNotFoundException {
+        List<Object[]> objectsList = employeeRepository.getEmployeeFullName(employeeId);
+        if(StringUtils.isEmpty(objectsList)){
+            throw new ResourceNotFoundException("Employee not found for this id :: " + employeeId);
+        }
 
-        employeeRepository.delete(employee);
-        Map < String, Boolean > response = new HashMap< >();
-        response.put("deleted", Boolean.TRUE);
-        return response;
+        List<Employee> employees = new ArrayList<>();
+        objectsList.stream().forEach((r) -> {
+            Employee employee = new Employee();
+            employee.setFirstName((String) r[0]);
+            employees.add(employee);
+        });
+        return ResponseEntity.ok().body(employees.get(0));
+
     }
+
 }
