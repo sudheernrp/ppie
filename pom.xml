@@ -16,6 +16,37 @@
 	<properties>
 		<java.version>1.8</java.version>
 	</properties>
+
+	<repositories>
+
+		<repository>
+			<id>maven central</id>
+			<name>central</name>
+			<url>https://central.maven.org/maven2/</url>
+		</repository>
+
+
+		<repository>
+			<id>maven snapshot</id>
+			<name>snapshot</name>
+			<url>https://repo.spring.io/snapshot</url>
+		</repository>
+
+		<repository>
+			<id>maven milestone</id>
+			<name>milestone</name>
+			<url>https://repo.spring.io/milestone</url>
+		</repository>
+
+		<repository>
+			<id>maven gradle</id>
+			<name>gradle</name>
+			<url>https://plugins.gradle.org/m2/</url>
+		</repository>
+
+
+	</repositories>
+
 	<dependencies>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -59,6 +90,28 @@
 			<optional>true</optional>
 		</dependency>
 	</dependencies>
+
+	<pluginRepositories>
+
+		<pluginRepository>
+			<id>maven-central</id>
+			<url>https://central.maven.org/maven2/</url>
+		</pluginRepository>
+
+		<pluginRepository>
+			<id>spring-snapshots</id>
+			<url>https://repo.spring.io/snapshot</url>
+		</pluginRepository>
+		<pluginRepository>
+			<id>spring-milestones</id>
+			<url>https://repo.spring.io/milestone</url>
+		</pluginRepository>
+		<pluginRepository>
+			<id>maven-gradle</id>
+			<url>https://plugins.gradle.org/m2/</url>
+		</pluginRepository>
+
+	</pluginRepositories>
 
 	<build>
 		<plugins>
