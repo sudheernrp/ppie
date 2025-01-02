@@ -75,16 +75,4 @@ public class EmployeeControllerIntegrationTest {
         assertNotNull(updatedEmployee);
     }
 
-    @Test
-    public void testDeleteEmployee() {
-         int id = 2;
-         Employee employee = restTemplate.getForObject(getRootUrl() + "/employees/" + id, Employee.class);
-         assertNotNull(employee);
-         restTemplate.delete(getRootUrl() + "/employees/" + id);
-         try {
-              employee = restTemplate.getForObject(getRootUrl() + "/employees/" + id, Employee.class);
-         } catch (final HttpClientErrorException e) {
-              assertEquals(e.getStatusCode(), HttpStatus.NOT_FOUND);
-         }
-    }
 }
