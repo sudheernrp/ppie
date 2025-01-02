@@ -3,6 +3,7 @@ package org.tg.ppie.impl;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.util.CollectionUtils;
 import org.springframework.util.StringUtils;
 import org.tg.ppie.exception.ResourceNotFoundException;
 import org.tg.ppie.mgr.EmployeeMgr;
@@ -55,10 +56,9 @@ public class EmployeeMgrImpl implements EmployeeMgr {
     @Override
     public Employee getEmployeeFullName(Long employeeId) throws ResourceNotFoundException {
         List<Object[]> objectsList = employeeRepository.getEmployeeFullName(employeeId);
-        if(StringUtils.isEmpty(objectsList)){
+        if(CollectionUtils.isEmpty(objectsList)){
             throw new ResourceNotFoundException("Employee not found for this id :: " + employeeId);
         }
-
         List<Employee> employees = new ArrayList<>();
         objectsList.forEach(r -> {
             Employee employee = new Employee();
